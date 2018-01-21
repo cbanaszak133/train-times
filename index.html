@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Train Schedule</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+
+</head>
+
+<body>
+	<div class="jumbotron">
+		<h1>Choo choo train times!</h1>
+	</div>
+
+	<div class="card">
+	  <div class="card-header white-text">Current Train Schedule</div>
+
+	  <div class="card-body">
+	  	<table class="table" id="train-table">
+	  		<thead>
+	  			<tr>
+	  				<th>Train Name</th>
+	  				<th>Destination</th>
+	  				<th>Frequency (min)</th>
+	  				<th>Next Arrival</th>
+	  				<th>Minutes Away</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  		</tbody>
+
+
+	  	</table>		
+	  	
+	  </div>
+
+	</div>
+
+	<div class="card">
+		<div class="card-header">Add Train</div>
+
+		<div class="card-body">
+			<form>
+				<label for="trainName">Train Name</label><br>
+  				<input type="text" name="trainName" id="trainName"><br> 
+
+  				<label for="destination">Destination</label><br>
+  				<input type="text" name="destination" id="destination"><br> 
+
+  				<label for="firstTrainTime">First Train Time</label><br>
+  				<input type="text" name="firstTrainTime" id="firstTrainTime"><br>
+
+  				<label for="frequency">Frequency</label><br>
+  				<input type="text" name="frequency" id="frequency"><br><br>
+
+  				<input type="submit" id="submit"></form>
+  			</form>
+  		</div>		
+
+	</div> 
+	
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+	
+
+
+</body>
