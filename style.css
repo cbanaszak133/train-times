@@ -1,0 +1,19 @@
+h1{
+	text-align: center;
+}
+
+.jumbotron{
+	background-color: #3CB371
+}
+
+.card-header{
+	background-color: #FFDAB9;
+}
+
+thead{
+	background-color: #4682B4
+}
+
+input[type="text"]{
+	width: 90%;
+}

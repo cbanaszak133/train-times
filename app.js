@@ -19,49 +19,95 @@ var config = {
   	var firstTrainTime = $("#firstTrainTime").val().trim();
   	var frequency = $("#frequency").val().trim();
 
+  	var newRef = database.ref().push()
+  	console.log(newRef.key);
+
   	var newTrain = {
   		trainName: trainName,
   		destination: destination,
   		firstTrainTime: firstTrainTime,
-  		frequency: frequency
+  		frequency: frequency,
+  		id: newRef.key
   	};
 
-  	database.ref().push(newTrain);
+ 
+  	newRef.set(newTrain);
+  	
 
   	
 
 
-	});
-
-  database.ref().on("child_added", function(childSnapshot) {
-  	var trainName = childSnapshot.val().trainName;
-  	var destination = childSnapshot.val().destination;
-  	var firstTrainTime = childSnapshot.val().firstTrainTime;
-
-  	console.log(firstTrainTime);
-
-  	var frequency = Number(childSnapshot.val().frequency);
-  	console.log(frequency);
-
-  	
-  	var diffTime = moment().diff(moment(firstTrainTime, "hh:mm"), "minutes");
-  	console.log(diffTime);
-
-  	var tRemainder = diffTime % frequency;
-
-  	var tToAdd = frequency - tRemainder;
-
-  	var nextTrain = moment().add(tToAdd, "minutes");
-  	console.log(nextTrain);
+});
 
 
-  	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" +
-  		frequency + "</td><td>" +  nextTrain.format("hh:mm A") + "</td><td>" + tToAdd);
+	
+database.ref().on("child_added", function(childSnapshot) {
+	var trainName = childSnapshot.val().trainName;
+	var destination = childSnapshot.val().destination;
+	var firstTrainTime = childSnapshot.val().firstTrainTime;
+
+	console.log(firstTrainTime);
+
+	var frequency = Number(childSnapshot.val().frequency);
+	console.log(frequency);
+
+
+	var diffTime = moment().diff(moment(firstTrainTime, "hh:mm"), "minutes");
+	console.log(diffTime);
+
+	var tRemainder = diffTime % frequency;
+
+	var tTillArrival = frequency - tRemainder;
+
+	var nextTrain = moment().add(tTillArrival, "minutes");
+	console.log(nextTrain);
+
+	var edit = "Edit";
+	var d = "Delete";
+
+	var assetKey = childSnapshot.val().id;
+
+	console.log(assetKey);
+	
 
 
 
-  });
+	$("#train-table > tbody").append("<tr id='"+ assetKey +"'><td>" + trainName + "</td><td>" + destination + "</td><td>" +
+		frequency + "</td><td>" +  nextTrain.format("hh:mm A") + "</td><td>" + tTillArrival + "</td><td>" +
+		"<button class='editbtn'>" + edit + "</button></td>" + "<td><button class='delete'>" + d + "</button></td></tr>");
 
+});
+
+$(document).on("click",'.editbtn', function () {
+	console.log("Hello!");
+          var currentTD = $(this).parents('tr').find('td');
+          if ($(this).html() == 'Edit') {                  
+              $.each(currentTD, function () {
+                  $(this).prop('contenteditable', true)
+              });
+          } else {
+             $.each(currentTD, function () {
+                  $(this).prop('contenteditable', false)
+              });
+          }
+
+          $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+});
+
+$(document).on("click", ".delete", function(){
+	var $row = $(this).closest('tr');
+	var id = $row.attr('id');
+	console.log(id);
+	database.ref().child(id).remove()
+
+	$row.remove();
+});
+
+
+
+
+	
 
  
 
