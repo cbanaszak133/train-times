@@ -1,3 +1,4 @@
+
 var config = {
     apiKey: "AIzaSyBxVtd_ODknduDsB-xmdG1gbWTFpgCZGW8",
     authDomain: "traintime-db.firebaseapp.com",
@@ -30,12 +31,13 @@ var config = {
   		id: newRef.key
   	};
 
+  	$("#trainName").val("");
+  	$("#destination").val("");
+  	$("#firstTrainTime").val("");
+  	$("#frequency").val("");
+
  
   	newRef.set(newTrain);
-  	
-
-  	
-
 
 });
 
@@ -70,30 +72,12 @@ database.ref().on("child_added", function(childSnapshot) {
 	console.log(assetKey);
 	
 
-
-
 	$("#train-table > tbody").append("<tr id='"+ assetKey +"'><td>" + trainName + "</td><td>" + destination + "</td><td>" +
-		frequency + "</td><td>" +  nextTrain.format("hh:mm A") + "</td><td>" + tTillArrival + "</td><td>" +
-		"<button class='editbtn'>" + edit + "</button></td>" + "<td><button class='delete'>" + d + "</button></td></tr>");
+		frequency + "</td><td>" +  nextTrain.format("hh:mm A") + "</td><td>" + tTillArrival + "</td>" 
+		+ "<td><button class='delete'>" + d + "</button></td></tr>");
 
 });
 
-$(document).on("click",'.editbtn', function () {
-	console.log("Hello!");
-          var currentTD = $(this).parents('tr').find('td');
-          if ($(this).html() == 'Edit') {                  
-              $.each(currentTD, function () {
-                  $(this).prop('contenteditable', true)
-              });
-          } else {
-             $.each(currentTD, function () {
-                  $(this).prop('contenteditable', false)
-              });
-          }
-
-          $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
-
-});
 
 $(document).on("click", ".delete", function(){
 	var $row = $(this).closest('tr');
